@@ -1,0 +1,118 @@
+<!DOCTYPE html><html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Đếm ngược ngày lễ 2026-2027</title>
+  <style>
+    body {
+      margin: 0;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: linear-gradient(135deg, #ff4e50, #f9d423);
+      font-family: Arial, sans-serif;
+      color: white;
+      text-align: center;
+      flex-direction: column;
+    }
+    .container {
+      background: rgba(0,0,0,0.3);
+      padding: 25px;
+      border-radius: 20px;
+      backdrop-filter: blur(10px);
+      margin-bottom: 20px;
+    }
+    h1 {
+      font-size: 28px;
+      margin-bottom: 15px;
+    }
+    .countdown {
+      font-size: 24px;
+      display: flex;
+      gap: 10px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+    .box {
+      background: rgba(255,255,255,0.2);
+      padding: 10px 15px;
+      border-radius: 10px;
+      min-width: 60px;
+    }
+    .label {
+      font-size: 12px;
+      opacity: 0.8;
+    }
+    select {
+      padding: 10px;
+      border-radius: 10px;
+      border: none;
+      margin-bottom: 15px;
+    }
+  </style>
+</head>
+<body>  <div class="container">
+    <h1>📅 Đếm ngược ngày lễ</h1><select id="eventSelect"></select>
+
+<div class="countdown">
+  <div class="box"><div id="days">0</div><div class="label">Ngày</div></div>
+  <div class="box"><div id="hours">0</div><div class="label">Giờ</div></div>
+  <div class="box"><div id="minutes">0</div><div class="label">Phút</div></div>
+  <div class="box"><div id="seconds">0</div><div class="label">Giây</div></div>
+</div>
+
+  </div>  <script>
+    const events = [
+      { name: "Tết Dương Lịch 2027", date: "2027-01-01" },
+      { name: "Valentine 2027", date: "2027-02-14" },
+      { name: "Tết Nguyên Đán 2027", date: "2027-02-06" },
+      { name: "Quốc tế Phụ nữ 8/3", date: "2027-03-08" },
+      { name: "Giỗ Tổ Hùng Vương", date: "2027-04-18" },
+      { name: "30/4 - Giải phóng", date: "2027-04-30" },
+      { name: "1/5 - Lao động", date: "2027-05-01" },
+      { name: "Quốc tế Thiếu nhi", date: "2027-06-01" },
+      { name: "Quốc khánh 2/9", date: "2027-09-02" },
+      { name: "Halloween", date: "2026-10-31" },
+      { name: "Giáng sinh", date: "2026-12-25" }
+    ];
+
+    const select = document.getElementById("eventSelect");
+
+    events.forEach((e, index) => {
+      const option = document.createElement("option");
+      option.value = index;
+      option.textContent = e.name;
+      select.appendChild(option);
+    });
+
+    let targetDate = new Date(events[0].date).getTime();
+
+    select.addEventListener("change", () => {
+      targetDate = new Date(events[select.value].date).getTime();
+    });
+
+    function updateCountdown() {
+      const now = new Date().getTime();
+      const diff = targetDate - now;
+
+      if (diff <= 0) {
+        document.querySelector('.countdown').innerHTML = "🎉 Đã đến ngày! 🎉";
+        return;
+      }
+
+      const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
+      const minutes = Math.floor((diff / (1000 * 60)) % 60);
+      const seconds = Math.floor((diff / 1000) % 60);
+
+      document.getElementById("days").innerText = days;
+      document.getElementById("hours").innerText = hours;
+      document.getElementById("minutes").innerText = minutes;
+      document.getElementById("seconds").innerText = seconds;
+    }
+
+    setInterval(updateCountdown, 1000);
+    updateCountdown();
+  </script></body>
+</html>
